@@ -1,13 +1,8 @@
 <template>
-  <div>
-    123
-  </div>
+  <NuxtPage/>
 </template>
 <script setup>
-showError({
-  statusCode: 404,
-  statusMessage: "cmd"
-})
+
 </script>
 <style>
 
