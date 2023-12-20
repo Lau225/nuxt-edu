@@ -12,6 +12,9 @@ export default defineNuxtConfig({
           ]
         : ['@juggle/resize-observer']
   },
+  modules: [
+    'nuxt-windicss',
+  ],
   vite: {
     optimizeDeps: {
       include:

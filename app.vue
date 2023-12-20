@@ -1,6 +1,7 @@
 <template>
   <div>
-    123
-    <NuxtWelcome />
+    
   </div>
 </template>
+<script setup>
+</script>
