@@ -7,7 +7,9 @@
             {{ error?.data?.data }}
         </template>
         <template v-else>
-            {{ data }}
+            <template v-for="(item,index) in data" :key="index">
+                <Banner :data="item.data" v-if="item.type === 'swiper'"></Banner>
+            </template>
         </template>
     </div>
 </template>
@@ -15,7 +17,7 @@
     const {data,pending,refresh,error} = await useFetch('http://demonuxtapi.dishait.cn/pc/index',{
         key:"IndexData",
         headers:{
-            // appid:"bd9d01ecc75dbbaaefce"
+            appid:"bd9d01ecc75dbbaaefce"
         },
         // 响应之前的数据处理
         transform:(res) => {
