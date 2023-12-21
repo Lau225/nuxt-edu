@@ -10,6 +10,7 @@
             <template v-for="(item,index) in data" :key="index">
                 <Banner :data="item.data" v-if="item.type === 'swiper'"></Banner>
                 <ImageView :data="item.data" v-if="item.type === 'icons'"></ImageView>
+                <ImageAd :data="item.data" v-if="item.type === 'imageAd'"></ImageAd>
             </template>
         </template>
     </div>
