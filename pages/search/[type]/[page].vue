@@ -20,22 +20,22 @@
       </n-grid>
       <div class="flex justify-center items-center mt-5 mb-10">
         <n-pagination
-            size="large"
-            :item-count="data?.count"
-            :page-size="limit"
-            :page="page"
-            :on-update-page="handlePageChange"
-            />
+          size="large"
+          :item-count="data?.count"
+          :page-size="limit"
+          :page="page"
+          :on-update-page="handlePageChange"
+        />
       </div>
     </LoadingGroup>
   </div>
 </template>
 
 <script setup>
-import { NGrid, NGi,NPagination } from "naive-ui";
+import { NGrid, NGi, NPagination } from "naive-ui";
 const route = useRoute();
-const title = route.query.keyword;
-const limit = ref(10)
+let title = ref(route.query.keyword);
+const limit = ref(10);
 useHead(title);
 const tabs = [
   {
@@ -60,25 +60,36 @@ const hanleClick = (t) => {
   });
 };
 const page = ref(parseInt(route.params.page));
-const { data, pending, refresh, error } = await useSearchListApi({
-  page: page.value,
-  keyword: encodeURIComponent(title),
-  type: type.value,
+const { data, pending, refresh, error } = await useSearchListApi(() => {
+  return {
+    page: page.value,
+    keyword: encodeURIComponent(title.value),
+    type: type.value,
+  };
 });
 
 const rows = computed(() => data.value?.rows ?? []);
 
 const handlePageChange = (p) => {
-    navigateTo({
-        params:{
-            ...route.params,
-            page:p
-        },
-        query:{
-            ...route.query
-        }
-    })
-}
+  navigateTo({
+    params: {
+      ...route.params,
+      page: p,
+    },
+    query: {
+      ...route.query,
+    },
+  });
+};
+
+watch(
+  () => route.query.keyword,
+  (newValue) => {
+    title.value = newValue
+    refresh();
+  }
+);
+
 definePageMeta({
   middleware: ["search"],
 });
