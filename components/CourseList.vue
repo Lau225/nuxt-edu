@@ -8,7 +8,7 @@
         </div>
         <div class="mt-2 flex items-end">
             <Price :value="item.price"></Price>
-            <Price class="ml-2" through="true" :value="item.t_price"></Price>
+            <Price class="ml-2" :through="true" :value="item.t_price"></Price>
         </div>
         <template #footer v-if="item.group_id || item.flashsale_id">
             <div class="bg-yellow-500 text-white p-3 text-xs flex items-center

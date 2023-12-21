@@ -1,6 +1,22 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app:{
+    head:{
+      titleTemplate:"%s - 固定标题",
+      title:"课堂",
+      charset:'utf-8',
+      htmlAttrs:{
+        lang:'zh-cn'
+      },
+      meta:[
+        {name:"description",content:"课堂描述"},
+        {name:"keywords",content:"课堂关键词"}
+      ],
+      script:[],
+      link:[]
+    }
+  },
   css:[
     "~/assets/main.css"
   ],

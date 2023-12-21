@@ -18,6 +18,13 @@
     </div>
 </template>
 <script setup>
+    useHead({
+        title:'课堂首页',
+        meta:[
+        {name:"description",content:"首页描述"},
+        {name:"keywords",content:"首页关键词"}
+      ],
+    })
     const {data,pending,refresh,error} = await useFetch('http://demonuxtapi.dishait.cn/pc/index',{
         key:"IndexData",
         headers:{
