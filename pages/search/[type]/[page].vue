@@ -5,7 +5,9 @@
 </template>
 
 <script setup>
-
+definePageMeta({
+    middleware:["search"]
+})
 </script>
 
 <style>
