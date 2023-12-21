@@ -1,9 +1,9 @@
 <template>
   <n-grid x-gap="12" :cols="4">
     <n-gi v-for="(item, i) in data" :key="i">
-      <n-card class="cursor-pointer" @click="$commonOpen(item)">
+      <n-card class="cursor-pointer mb-5" @click="$commonOpen(item)">
         <template #cover>
-            <img :src="item.src" class="w-[100] h-[90px] ">
+            <img :src="item.src" class="w-[100%] h-[90px] ">
         </template>
         <div class="text-center pt-4">
             {{ item.name }}
