@@ -57,7 +57,6 @@ const { data, pending, refresh, error } = await useSearchListApi({
 });
 
 const rows = computed(() => data.value?.rows ?? []);
-console.log(rows);
 definePageMeta({
   middleware: ["search"],
 });

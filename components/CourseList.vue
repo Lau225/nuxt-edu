@@ -1,7 +1,8 @@
 <template>
   <n-card footer-style="padding:0" class="cursor-pointer mb-5 shadow-md">
     <template #cover>
-      <img :src="item.cover" class="w-[100%] h-[150px]" />
+      <UiImage :src="item.cover" class="w-[100%] h-[150px]"></UiImage>
+      <!-- <img :src="item.cover" class="w-[100%] h-[150px]" /> -->
     </template>
     <div class="pt-2">
       <span class="font-semibold w-full truncate">{{ item.title }}</span>
