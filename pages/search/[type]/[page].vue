@@ -18,14 +18,24 @@
           <course-list :item="item"></course-list>
         </n-gi>
       </n-grid>
+      <div class="flex justify-center items-center mt-5 mb-10">
+        <n-pagination
+            size="large"
+            :item-count="data?.count"
+            :page-size="limit"
+            :page="page"
+            :on-update-page="handlePageChange"
+            />
+      </div>
     </LoadingGroup>
   </div>
 </template>
 
 <script setup>
-import { NGrid, NGi } from "naive-ui";
+import { NGrid, NGi,NPagination } from "naive-ui";
 const route = useRoute();
 const title = route.query.keyword;
+const limit = ref(10)
 useHead(title);
 const tabs = [
   {
@@ -57,6 +67,18 @@ const { data, pending, refresh, error } = await useSearchListApi({
 });
 
 const rows = computed(() => data.value?.rows ?? []);
+
+const handlePageChange = (p) => {
+    navigateTo({
+        params:{
+            ...route.params,
+            page:p
+        },
+        query:{
+            ...route.query
+        }
+    })
+}
 definePageMeta({
   middleware: ["search"],
 });

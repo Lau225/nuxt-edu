@@ -27,7 +27,7 @@ if(props.type === 'group'){
   const {data} = await useGroupDataApi({
     page:1,
     usable:1,
-    limit:8
+    limit:2
   })
   pdata.value = data.value?.rows || []
 }
