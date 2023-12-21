@@ -1,8 +1,8 @@
-
-import type { setup } from '@css-render/vue3-ssr';
 <template>
   <div>
-    <template v-if="pending"> 加载中... </template>
+    <template v-if="loading">
+        <LoadingSkeleton></LoadingSkeleton>
+    </template>
     <template v-else-if="error">
       <n-result status="500" title="错误提示" :description="error.message">
         <template #footer>
@@ -18,8 +18,8 @@ import type { setup } from '@css-render/vue3-ssr';
 
 <script setup>
 import {NResult,NButton} from 'naive-ui'
-defineProps({
-  pedding: {
+const props = defineProps({
+    pending: {
     type: Boolean,
     default: false,
   },
@@ -28,6 +28,18 @@ defineProps({
     default: "",
   },
 });
+
+const loading = ref(false)
+const stop = watchEffect(()=>{
+    if(props.pending && !loading.value){
+        loading.value = true
+    }else{
+        setTimeout(()=>{
+            loading.value = false
+        },200)
+    }
+})
+onBeforeUnmount(()=>stop())
 </script>
 
 <style>

@@ -1,5 +1,5 @@
 <template>
-  <LoadingGroup :pedding="pending" :error="error">
+  <LoadingGroup :pending="pending" :error="error">
     <template v-for="(item, index) in data" :key="index">
       <Banner :data="item.data" v-if="item.type === 'swiper'"></Banner>
       <ImageView
