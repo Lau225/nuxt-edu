@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div  class="container flex items-center h-[60px]">
-      <n-button text class="!text-xl font-bold">蚂蚁课堂</n-button>
+      <n-button text class="!text-xl font-bold">课堂</n-button>
       <ui-menu>
         <ui-menu-item @click="handleOpen(item.path)" :active="isMenuItemActive(item)" v-for="item,index in menu" :key="index">
           {{ item.name }}

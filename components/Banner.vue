@@ -2,7 +2,7 @@
   <n-carousel show-arrow autoplay class="mb-6">
     <img v-for="item,index in data" :key="index"
       class="carousel-img" :src="item.src"
-      @click="open(item)"
+      @click="$commonOpen(item)"
     >
   </n-carousel>
 </template>
@@ -12,11 +12,7 @@ import {NCarousel} from 'naive-ui'
 defineProps({
     data:Array
 })
-const open = (item) => {
-    if(item.type == 'webview'){
-        window.open(item.url)
-    }
-}
+
 </script>
 
 <style>

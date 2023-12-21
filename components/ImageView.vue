@@ -1,12 +1,12 @@
 <template>
   <n-grid x-gap="12" :cols="4">
     <n-gi v-for="(item, i) in data" :key="i">
-      <n-card>
+      <n-card class="cursor-pointer" @click="$commonOpen(item)">
         <template #cover>
-            <img :src="item.src">
+            <img :src="item.src" class="w-[100] h-[90px] ">
         </template>
         <div class="text-center pt-4">
-            文字内容
+            {{ item.name }}
         </div>
       </n-card>
     </n-gi>
