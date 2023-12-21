@@ -7,7 +7,7 @@
           {{ item.name }}
         </ui-menu-item>
       </ui-menu>
-      <n-button circle class="ml-auto mr-3">
+      <n-button circle class="ml-auto mr-3" @click="openSearch">
         <template #icon>
           <n-icon><Search /></n-icon>
         </template>
@@ -23,6 +23,7 @@
     </div>
   </div>
   <div class="w-[100%] h-[80px]" />
+  <SearchBar ref="searchBarRef"></SearchBar>
 </template>
 
 <script setup>
@@ -40,6 +41,10 @@ const options = [
   },
 ]
 
+const searchBarRef = ref(null)
+const openSearch = () => {
+  searchBarRef.value.open()
+}
 const menu = [
   {
     name:'首页',
