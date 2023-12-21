@@ -25,21 +25,8 @@
         {name:"keywords",content:"首页关键词"}
       ],
     })
-    const {data,pending,refresh,error} = await useFetch('/index',{
-        key:"IndexData",
-        headers:{
-            appid:"bd9d01ecc75dbbaaefce"
-        },
-        baseURL:'http://demonuxtapi.dishait.cn/pc',
-        // 响应之前的数据处理
-        transform:(res) => {
-            return res.data
-        },
-        // 是否开启缓存
-        initialCache:false,
-        // 懒加载,配合pending使用
-        lazy:true
-    })
+
+    const {data,pending,refresh,error} = await useIndexDataApi()
     // 服务端报错
     if(process.server && error.value){
         showError(error.value?.data?.data)

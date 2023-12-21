@@ -41,5 +41,8 @@ export default defineNuxtConfig({
           ? ['naive-ui', 'vueuc', 'date-fns-tz/formatInTimeZone']
           : []
     }
+  },
+  imports:{
+    dirs:["apis"]
   }
 })
