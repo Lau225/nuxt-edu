@@ -10,12 +10,12 @@
             <Price :value="item.price"></Price>
             <Price class="ml-2" through="true" :value="item.t_price"></Price>
         </div>
-        <template #footer>
+        <template #footer v-if="item.group_id || item.flashsale_id">
             <div class="bg-yellow-500 text-white p-3 text-xs flex items-center
             rounded-b">
-                拼团中
+            {{ item.group_id ? '拼团中' : '秒杀中' }}
                 <div class="ml-auto flex items-center">
-                    倒计时
+                    <CountDown :time="item.end_time"></CountDown>
                 </div>
             </div>
         </template>
