@@ -1,17 +1,29 @@
 <template>
     <div>
-        {{ data }}
+        <template v-if="pending">
+            加载中...
+        </template>
+        <template v-else-if="error">
+            {{ error?.data?.data }}
+        </template>
+        <template v-else>
+            {{ data }}
+        </template>
     </div>
 </template>
 <script setup>
-    const {data} = await useFetch('http://demonuxtapi.dishait.cn/pc/index',{
+    const {data,pending,refresh,error} = await useFetch('http://demonuxtapi.dishait.cn/pc/index',{
         key:"IndexData",
         headers:{
-            appid:"bd9d01ecc75dbbaaefce"
+            // appid:"bd9d01ecc75dbbaaefce"
         },
         // 响应之前的数据处理
         transform:(res) => {
             return res.data
-        } 
+        },
+        // 是否开启缓存
+        initialCache:false,
+        // 懒加载,配合pending使用
+        lazy:true
     })
 </script>
