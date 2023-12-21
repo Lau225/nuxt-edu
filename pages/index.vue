@@ -12,6 +12,7 @@
                 <ImageView :data="item.data" v-else-if="item.type === 'icons'"></ImageView>
                 <ImageAd :data="item.data" v-else-if="item.type === 'imageAd'"></ImageAd>
                 <ListCard :title="item.title" :data="item.data" v-else-if="item.type === 'list'"></ListCard>
+                <ListCard :type="item.listType" :title="item.title" :data="item.data" v-else-if="item.type === 'promotion'"></ListCard>
             </template>
         </template>
     </div>
