@@ -26,4 +26,8 @@
         // 懒加载,配合pending使用
         lazy:true
     })
+    // 服务端报错
+    if(process.server && error.value){
+        showError(error.value?.data?.data)
+    }
 </script>
