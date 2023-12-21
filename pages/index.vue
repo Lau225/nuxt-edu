@@ -25,11 +25,12 @@
         {name:"keywords",content:"首页关键词"}
       ],
     })
-    const {data,pending,refresh,error} = await useFetch('http://demonuxtapi.dishait.cn/pc/index',{
+    const {data,pending,refresh,error} = await useFetch('/index',{
         key:"IndexData",
         headers:{
             appid:"bd9d01ecc75dbbaaefce"
         },
+        baseURL:'http://demonuxtapi.dishait.cn/pc',
         // 响应之前的数据处理
         transform:(res) => {
             return res.data
