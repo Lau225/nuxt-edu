@@ -21,7 +21,7 @@
       <div class="flex justify-center items-center mt-5 mb-10">
         <n-pagination
           size="large"
-          :item-count="data?.count"
+          :item-count="total"
           :page-size="limit"
           :page="page"
           :on-update-page="handlePageChange"
@@ -35,7 +35,6 @@
 import { NGrid, NGi, NPagination } from "naive-ui";
 const route = useRoute();
 let title = ref(route.query.keyword);
-const limit = ref(10);
 useHead(title);
 const tabs = [
   {
@@ -59,28 +58,17 @@ const hanleClick = (t) => {
     },
   });
 };
-const page = ref(parseInt(route.params.page));
-const { data, pending, refresh, error } = await useSearchListApi(() => {
-  return {
-    page: page.value,
-    keyword: encodeURIComponent(title.value),
-    type: type.value,
-  };
-});
 
-const rows = computed(() => data.value?.rows ?? []);
 
-const handlePageChange = (p) => {
-  navigateTo({
-    params: {
-      ...route.params,
-      page: p,
-    },
-    query: {
-      ...route.query,
-    },
-  });
-};
+const {page,limit,total,handlePageChange,rows,pending,error,refresh} = await usePage(({page,limit})=>{
+    return useSearchListApi(()=>{
+        return {
+            page,
+            keyword:encodeURIComponent(title.value),
+            type:type.value
+        }
+    })
+})
 
 watch(
   () => route.query.keyword,
