@@ -67,6 +67,7 @@ import {
   useMessage,
   createDiscreteApi,
 } from "naive-ui";
+import { useRegApi } from "~/apis/user";
 
 const route = useRoute();
 
@@ -123,26 +124,31 @@ const changeType = () => {
   for (const key in form) {
     form[key] = "";
   }
-//   formRef.value.restoreValidation();
+  //   formRef.value.restoreValidation();
 };
 const onSubmit = () => {
   formRef.value.validate(async (errors) => {
     if (errors) return;
     loading.value = true;
-    let { data, error } = await useLoginApi(form);
+    let { data, error } =
+      type.value == "login" ? await useLoginApi(form) : await useRegApi(form);
     loading.value = false;
-    console.log(data, error);
     if (error.value) {
       return;
     }
     const { message } = createDiscreteApi(["message"]);
-    message.success("登录成功");
-    // 将用户成功返回的token存储在cookie中
-    const token = useCookie("token");
-    token.value = data.value.token
-    const user = useUser()
-    user.value = data.value
-    navigateTo(route.query.from || "/",{replace:true})
+    if (type.value == "login") {
+      message.success("登录成功");
+      // 将用户成功返回的token存储在cookie中
+      const token = useCookie("token");
+      token.value = data.value.token;
+      const user = useUser();
+      user.value = data.value;
+      navigateTo(route.query.from || "/", { replace: true });
+    }else{
+      message.success("注册成功");
+      changeType()
+    }
   });
 };
 definePageMeta({
