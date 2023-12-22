@@ -12,16 +12,16 @@
           <n-icon><Search /></n-icon>
         </template>
       </n-button>
-      <NuxtLink to="/login">
+      <NuxtLink to="/login" v-if="!user">
         <n-button secondary strong>登录</n-button>
       </NuxtLink>
-      <!-- <n-dropdown trigger="hover" :options="options" @select="handleSelect">
+      <n-dropdown trigger="hover" :options="options" @select="handleSelect" v-else>
         <n-avatar
           round
           size="small"
-          src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+          :src="user.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'"
         />
-      </n-dropdown> -->
+      </n-dropdown>
     </div>
   </div>
   <div class="w-[100%] h-[80px]" />
@@ -31,6 +31,8 @@
 <script setup>
 import { NButton, NIcon, NDropdown,NAvatar } from "naive-ui";
 import { Search } from "@vicons/ionicons5";
+
+const user = useUser()
 
 const options = [
   {
@@ -42,6 +44,7 @@ const options = [
     key: "logout",
   },
 ]
+
 
 const searchBarRef = ref(null)
 const openSearch = () => {

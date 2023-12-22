@@ -1,5 +1,4 @@
-import { useFetch } from "nuxt/app"
-
+import {createDiscreteApi} from 'naive-ui'
 const fetchConfig = {
     headers:{
         appid:"bd9d01ecc75dbbaaefce"
@@ -28,6 +27,16 @@ export async function useHttp(key,url,options = {}){
             return res.data
         },
     })
+
+    // 客户端处理错误
+
+    if(process.client && res.error.value){
+        const msg = res.error.value?.data?.data
+        if(!options.lazy){
+            const {message} = createDiscreteApi(["message"])
+            message.error(msg || '服务端错误')
+        }
+    }
 
     return res
 }
