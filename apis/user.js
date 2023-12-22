@@ -3,3 +3,9 @@ export  function useLoginApi(body){
         body
     })
 }
+
+export function useGetinfoApi(){
+    return useHttpGet("getinfo",'/getinfo',{
+        $:true
+    })
+}
