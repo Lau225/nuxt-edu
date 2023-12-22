@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { NButton, NIcon, NDropdown,NAvatar } from "naive-ui";
+import { NButton, NIcon, NDropdown,NAvatar,createDiscreteApi } from "naive-ui";
 import { Search } from "@vicons/ionicons5";
 
 const user = useUser()
@@ -164,6 +164,21 @@ const isMenuItemActive = (item) => {
     return i != -1
   }
   return route.path == item.path
+}
+
+const handleSelect = (key) => {
+  switch(key){
+    case 'logout':
+      const {dialog} = createDiscreteApi(["dialog"])
+      dialog.warning({
+          content: '是否要退出登录？',
+          positiveText:'退出',
+          negativeText:'取消',
+          onPositiveClick:async ()=>{
+            await useLogout()
+          }
+      })
+  }
 }
 </script>
 

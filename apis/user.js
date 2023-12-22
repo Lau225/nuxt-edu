@@ -9,3 +9,8 @@ export function useGetinfoApi(){
         $:true
     })
 }
+
+// 退出登录
+export function useLogoutApi(){
+    return useHttpPost("logout",'/logout')
+}
