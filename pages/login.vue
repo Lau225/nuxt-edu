@@ -64,10 +64,8 @@ import {
   NFormItem,
   NInput,
   NButton,
-  useMessage,
   createDiscreteApi,
 } from "naive-ui";
-import { useRegApi } from "~/apis/user";
 
 const route = useRoute();
 

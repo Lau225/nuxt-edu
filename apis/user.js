@@ -22,3 +22,12 @@ export  function useRegApi(body){
         body
     })
 }
+
+// 获取手机验证码
+export function usePhoneCallApi(phone){
+    return useHttpPost("getCaptcha",'/get_captcha',{
+        body:{
+            phone
+        }
+    })
+}
