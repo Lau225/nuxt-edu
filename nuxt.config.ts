@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app:{
     head:{
-      titleTemplate:"%s - 固定标题",
+      titleTemplate:"%s - 编程大王",
       title:"课堂",
       charset:'utf-8',
       htmlAttrs:{
