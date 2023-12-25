@@ -11,7 +11,7 @@
       </UiTabItem>
     </UiTab>
 
-    <LoadingGroup :pending="pending" :error="error">
+    <LoadingGroup :pending="pending" :error="error" :isEmpty="rows.length === 0">
       <div>
         <UserHistoryList :item="item" v-for="item,index in rows" :key="index"/>
       </div>

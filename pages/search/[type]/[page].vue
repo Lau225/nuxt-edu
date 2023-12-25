@@ -12,7 +12,7 @@
       </UiTabItem>
     </UiTab>
 
-    <LoadingGroup :pending="pending" :error="error">
+    <LoadingGroup :pending="pending" :error="error" :is-empty="rows.length === 0">
       <template #loading>
         <LoadingCourseSkeleton></LoadingCourseSkeleton>
       </template>
