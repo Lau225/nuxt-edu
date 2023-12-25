@@ -69,3 +69,10 @@ export function useUserTestApi(page){
         lazy:true
     })
 }
+
+// 我的帖子列表
+export function useMypostListApi(page){
+    return useHttpGet("MypostList",`/mypost?page=${page}`,{
+        lazy:true
+    })
+}

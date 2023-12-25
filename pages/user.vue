@@ -33,6 +33,7 @@ const menus = [
   },
   {
     title: "我的帖子",
+    name:"user-post-page"
   },
   {
     title: "优惠券记录",
