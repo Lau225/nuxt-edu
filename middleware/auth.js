@@ -7,9 +7,9 @@ export default defineNuxtRouteMiddleware((to,from)=>{
     const {message} = createDiscreteApi(["message"])
     if(!token.value){
         if(process.client){
-            return navigateTo("/login?form="+route.fullPath)
             message.error("请先登录")
         }
+        return navigateTo("/login?form="+route.fullPath)
     }
     // 未绑定手机号
     const phone = user.value?.phone

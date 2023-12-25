@@ -178,6 +178,10 @@ const handleSelect = (key) => {
             await useLogout()
           }
       })
+      break;
+      case 'center':
+        navigateTo({path:'/user/history/1'})
+        break;
   }
 }
 </script>
