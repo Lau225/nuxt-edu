@@ -13,7 +13,7 @@
 
     <LoadingGroup :pending="pending" :error="error">
       <div>
-        {{ rows }}
+        <UserHistoryList :item="item" v-for="item,index in rows" :key="index"/>
       </div>
       <div class="flex justify-center items-center mt-5 mb-10">
         <n-pagination
@@ -47,6 +47,7 @@ const hanleClick = (t) => {
   navigateTo({
     params: {
       ...route.params,
+      page:1,
     },
     query: {
       ...route.query,
@@ -64,6 +65,7 @@ const {page,limit,total,handlePageChange,rows,pending,error,refresh} = await use
         }
     })
 })
+console.log(rows);
 
 </script>
 
