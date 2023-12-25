@@ -7,13 +7,13 @@
     <UiCardBody>
         {{ item.goods }}
     </UiCardBody>
-    <UiCardFooter class="flex ">
+    <UiCardFooter class="flex items-center">
         <span v-if="item.type != 'default'">{{ t[item.type] }}</span>
         <Price :value="item.price"/>
         <span class="ml-auto" :class="{'text-green-600':(item.status === 'success')}">
             {{ s[item.status] }}
         </span>
-        <n-button type="primary" size="small" class="ml-3" v-if="item.status === 'pendding'">立即支付</n-button>
+        <n-button @click="pay" type="primary" size="small" class="ml-3" v-if="item.status === 'pendding'">立即支付</n-button>
            
     </UiCardFooter>
   </UiCard>
@@ -21,7 +21,7 @@
 
 <script setup>
 import {NButton} from 'naive-ui'
-defineProps({
+const props = defineProps({
     item:Object
 })
 
@@ -34,6 +34,10 @@ const s = {
 const t = {
     group:"拼团",
     flashsale:"秒杀"
+}
+
+const pay = () => {
+    navigateTo(`/pay?no=${props.item.no}`)
 }
 </script>
 

@@ -62,3 +62,10 @@ export function useOrderListApi(page){
         lazy:true
     })
 }
+
+// 我的考试记录
+export function useUserTestApi(page){
+    return useHttpGet("UserTest",`/user_test/list?page=${page}`,{
+        lazy:true
+    })
+}

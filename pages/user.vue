@@ -29,6 +29,7 @@ const menus = [
   },
   {
     title: "我的考试",
+    name:"user-test-page"
   },
   {
     title: "我的帖子",
