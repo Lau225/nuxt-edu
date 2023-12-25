@@ -69,7 +69,7 @@ import {
   NInputGroup
 } from "naive-ui";
 
-const route = useRoute();
+const router = useRouter();
 
 const loading = ref(false);
 
@@ -117,8 +117,15 @@ const rules = {
 const formRef = ref(null);
 const onSubmit = () => {
   formRef.value.validate(async (errors) => {
-        
-  });
+        if(errors) return 
+        loading.value = true
+        let {data,error} = await useForgetApi(form)
+        loading.value = false
+        if(error.value) return
+        const {message} = createDiscreteApi(["message"])
+        message.success("重置密码成功")
+        router.go(-1)
+    });
 };
 definePageMeta({
     title:"忘记密码",
