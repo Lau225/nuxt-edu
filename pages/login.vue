@@ -35,7 +35,9 @@
       <n-button text type="primary" size="medium" @click="changeType">
         {{ type === "login" ? "注 册" : "登 录" }}
       </n-button>
-      <n-button text type="primary" size="medium">忘记密码？</n-button>
+      <nuxt-link to="/forget">
+        <n-button text type="primary" size="medium">忘记密码？</n-button>
+      </nuxt-link>
     </div>
     <div>
       <n-button
