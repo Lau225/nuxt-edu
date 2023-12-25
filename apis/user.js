@@ -55,3 +55,10 @@ export function useUserHistoryApi(query){
         lazy:true
     })
 }
+
+// 获取购买记录
+export function useOrderListApi(page){
+    return useHttpGet("OrderList",`order/list?page=${page}`,{
+        lazy:true
+    })
+}

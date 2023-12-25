@@ -25,6 +25,7 @@ const menus = [
   },
   {
     title: "购买记录",
+    name:"user-buy-page"
   },
   {
     title: "我的考试",
@@ -48,7 +49,7 @@ const menus = [
     title: "其他设置",
   },
 ];
-const navigate = () => {
+const navigate = (item) => {
     navigateTo({
         name:item.name,
         params:{

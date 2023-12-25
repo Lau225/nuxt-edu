@@ -65,7 +65,6 @@ const {page,limit,total,handlePageChange,rows,pending,error,refresh} = await use
         }
     })
 })
-console.log(rows);
 
 </script>
 
