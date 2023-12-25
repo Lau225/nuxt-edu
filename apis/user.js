@@ -31,3 +31,10 @@ export function usePhoneCallApi(phone){
         }
     })
 }
+
+// 绑定手机号
+export function useBindPhoneApi(body){
+    return useHttpPost("bindphone",'/bind_mobile',{
+        body
+    })
+}

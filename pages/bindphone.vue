@@ -43,6 +43,8 @@ const loading = ref(false);
 
 useHead({ title: "绑定手机号" });
 
+const route = useRoute()
+
 const form = reactive({
   phone: "",
   code: "",
@@ -63,7 +65,19 @@ const rules = {
 };
 const formRef = ref(null);
 
-const onSubmit = () => {};
+const onSubmit = () => {
+  formRef.value.validate(async (errors)=>{
+    if(errors) return 
+    loading.value = true
+    let {data,error} = await useBindPhoneApi(form)
+    loading.value = false
+    if(error.value) return
+    const {message} = createDiscreteApi(["message"])
+    message.success("绑定成功")
+
+    navigateTo(route.query.from || '/',{replace:true})
+  })
+};
 definePageMeta({
     layout:'login',
     title:"绑定手机号"
