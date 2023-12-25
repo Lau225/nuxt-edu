@@ -130,6 +130,7 @@ const onSubmit = () => {
 definePageMeta({
     title:"忘记密码",
     layout: "login",
+    middleware:["only-visitor"]
 });
 </script>
 <style>

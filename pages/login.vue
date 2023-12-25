@@ -153,6 +153,7 @@ const onSubmit = () => {
 };
 definePageMeta({
   layout: "login",
+  middleware:["only-visitor"]
 });
 </script>
 
