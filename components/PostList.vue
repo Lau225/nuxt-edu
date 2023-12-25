@@ -13,7 +13,7 @@
         class="mr-3 mb-2 rounded"/>
     </div>
     <div class="flex mt-5">
-        <n-button class="mr-3" secondary strong type="primary" size="tiny">
+        <n-button :loading="supportLoading" @click.stop="handleSupport(item)" class="mr-3" secondary strong :type="item.issupport ? 'primary': 'tertiary'" size="tiny">
             <template #icon>
                 <ThumbsUpSharp/>
             </template>
@@ -36,11 +36,18 @@
 </template>
 
 <script setup>
-import {NTag,NImage,NButton} from 'naive-ui'
+import {NTag,NImage,NButton,createDiscreteApi} from 'naive-ui'
 import {ThumbsUpSharp,ChatboxEllipsesOutline} from '@vicons/ionicons5'
 const props = defineProps({
     item:Object
 })
+
+
+// 处理点赞和取消点赞
+const {
+    supportLoading,
+    handleSupport
+} = useHandleSupportPost()
 </script>
 
 <style>
