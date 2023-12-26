@@ -41,13 +41,13 @@ const open = () => {
     @apply mb-5 bg-orange-500 !border-0;
 }
 .coupon-disabled{
-    @apply !bg-gray-300
+    @apply !bg-gray-300;
 }
 .coupon h4{
     @apply text-2xl mb-2 font-bold text-white;
 }
 .coupon p{
-    @apply text-sm text-light-300
+    @apply text-sm text-light-300;
 }
 </style>
 

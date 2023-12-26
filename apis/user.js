@@ -83,3 +83,17 @@ export function useUserCouponApi(page){
         lazy:true
     })
 }
+
+// 我的收藏列表
+export function useUserFavaApi(page){
+    return useHttpGet("userFava",`/user_fava?page=${page}`,{
+        lazy:true
+    })
+}
+
+// 取消收藏
+export function useUncollectApi(body){
+    return useHttpPost("Uncollect",'/uncollect',{
+        body
+    })
+}
