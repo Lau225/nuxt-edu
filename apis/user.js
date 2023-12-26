@@ -76,3 +76,10 @@ export function useMypostListApi(page){
         lazy:true
     })
 }
+
+// 获取优惠券记录
+export function useUserCouponApi(page){
+    return useHttpGet("userCoupon",`/user_coupon?page=${page}`,{
+        lazy:true
+    })
+}

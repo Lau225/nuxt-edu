@@ -58,17 +58,13 @@ export function useHeadAuth(callback = null){
 // 点赞或者取消点赞
 export function useHandleSupportPost(){
     const handleSupport = (item) => {
-        const supportLoading = ref(false)
         useHeadAuth(async ()=>{
             // 行为判断
             let type = item.issupport ? 'unsupport' :'support'
             let msg = item.issupport ? '取消点赞' :'点赞'
-        
-            supportLoading.value = true
-    
+          
             const {error} = await usePostSupportApi(item.id,type)
             
-            supportLoading.value = false
     
             // 操作失败直接返回
             if(error.value) return 
@@ -89,6 +85,5 @@ export function useHandleSupportPost(){
     }
     return {
         handleSupport,
-        supportLoading
     }
 }

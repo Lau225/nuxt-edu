@@ -1,7 +1,11 @@
 <template>
   <LoadingGroup :pending="pending" :error="error" :isEmpty="rows.length === 0">
       <div>
-        <PostList @delete="handleDeleteItem" v-for="item,index in rows" :key="index" :item="item"></PostList>
+        <n-grid :x-gap="20" :cols="2">
+          <n-grid-item v-for="item,index in rows" :key="index">
+            <UserCouponList :item="item"></UserCouponList>
+          </n-grid-item>
+        </n-grid>
       </div>
       <div class="flex justify-center items-center mt-5 mb-10">
         <n-pagination
@@ -16,21 +20,12 @@
 </template>
 
 <script setup>
-import {NPagination} from 'naive-ui'
-import { useDeletePostApi } from '~/apis/bbs';
-useHead({title:"我的帖子"})
+import {NPagination,NGrid,NGridItem} from 'naive-ui'
+useHead({title:"优惠券记录"})
 const {page,limit,total,handlePageChange,rows,pending,error,refresh} = await usePage(({page,limit})=>{
-    return useMypostListApi(page)
+    return useUserCouponApi(page)
 })
-const handleDeleteItem = async ({id,success,fail}) => {
-  let {error} = await useDeletePostApi(id)
-  if(error.value){
-    fail()
-  }else{
-    success()
-    refresh()
-  }
-}
+console.log(rows);
 </script>
 
 <style>

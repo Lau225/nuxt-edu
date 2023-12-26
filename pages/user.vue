@@ -37,6 +37,7 @@ const menus = [
   },
   {
     title: "优惠券记录",
+    name:"user-coupon-page"
   },
   {
     title: "我的收藏",
