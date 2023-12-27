@@ -6,6 +6,7 @@
         <div class="flex flex-col items-start">
           <div class="flex items-center">
             <span class="text-xl mr-2">{{ data.title }}</span>
+            <fava-btn :is_fava="data.isfava" :goods_id="data.id" :type="type"/>
           </div>
           <p class="my-2 text-xs text-gray-400">{{subTitle}}</p>
           <div v-if="!data.isbuy">

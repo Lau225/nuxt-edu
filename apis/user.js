@@ -98,6 +98,13 @@ export function useUncollectApi(body){
     })
 }
 
+// 收藏
+export function useCollectApi(body){
+    return useHttpPost("collect",'/collect',{
+        body
+    })
+}
+
 // 修改资料
 export function useUpdateUserInfoApi(body){
     return useHttpPost("updateUserInfo",'/update_info',{
