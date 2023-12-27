@@ -1,5 +1,5 @@
 import { createDiscreteApi } from 'naive-ui'
-const fetchConfig = {
+export const fetchConfig = {
     headers: {
         appid: "bd9d01ecc75dbbaaefce"
     },

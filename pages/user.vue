@@ -45,9 +45,11 @@ const menus = [
   },
   {
     title: "修改资料",
+    name:"user-edit"
   },
   {
     title: "修改密码",
+    name:"user-password"
   },
   {
     title: "其他设置",

@@ -97,3 +97,28 @@ export function useUncollectApi(body){
         body
     })
 }
+
+// 修改资料
+export function useUpdateUserInfoApi(body){
+    return useHttpPost("updateUserInfo",'/update_info',{
+        body
+    })
+}
+
+// 上传图片
+export function useUploadConfig(){
+    return {
+        action:fetchConfig.baseURL + "/pc/upload",
+        headers:{
+            appid:fetchConfig.headers.appid,
+            token:useCookie("token").value
+        }
+    }
+}
+
+// 修改密码
+export function useUpdatePasswordApi(body){
+    return useHttpPost("updatePassword",'/update_password',{
+        body
+    })
+}
