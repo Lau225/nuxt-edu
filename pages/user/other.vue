@@ -10,7 +10,7 @@
 
 <script setup>
 import {NButton} from 'naive-ui'
-useHead({title:"其他设置"})
+useHead({title:"其他设置"}) 
 const user = useUser()
 const jump = () => {
     navigateTo("/bindphone")
