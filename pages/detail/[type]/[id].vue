@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="mt-auto" v-if="!data.isbuy">
-          <n-button type="primary">立即学习</n-button>
+          <n-button @click="buy" :loading="loading" type="primary">立即学习</n-button>
         </div>
       </div>
     </section>
@@ -68,6 +68,25 @@ const subTitle = computed(()=>{
     }
     return `${pre} ${data.value.sub_count}人学过`
 })
+
+const loading = ref(false)
+const buy = () => {
+    useHeadAuth(async ()=>{
+        if(data.value.price == 0){
+            loading.value = true
+            const {error} = await useLearnApi({
+                goods_id:data.value.id,
+                type:type
+            })
+
+            if(!error.value){
+                refresh()
+            }
+
+            return 
+        }
+    })
+}
 </script>
 
 <style scoped>

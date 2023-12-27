@@ -19,3 +19,10 @@ export function useHotCourseListApi(){
         lazy:true
     })
 }
+
+// 免费学习
+export function useLearnApi(body){
+    return useHttpPost("learn","/order/learn",{
+        body
+    })
+}
