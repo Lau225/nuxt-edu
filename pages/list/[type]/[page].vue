@@ -5,7 +5,7 @@
         <NuxtLink to="/">首页</NuxtLink>
          </n-breadcrumb-item>
       <n-breadcrumb-item>
-         课程列表</n-breadcrumb-item>
+         {{ title }}</n-breadcrumb-item>
       </n-breadcrumb>
     <LoadingGroup
       :pending="pending"
@@ -37,7 +37,10 @@
 import { NGrid, NGi, NPagination,NBreadcrumb,NBreadcrumbItem } from "naive-ui";
 const route = useRoute();
 const { type } = route.params;
-useHead({ title: "课程列表" });
+const title = route.meta.title
+definePageMeta({
+  middleware:["list"]
+})
 
 const { page, limit, total, handlePageChange, rows, pending, error, refresh } =
   await usePage(({ page, limit }) => {
