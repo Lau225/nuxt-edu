@@ -53,6 +53,7 @@ const menus = [
   },
   {
     title: "其他设置",
+    name:"user-other"
   },
 ];
 const navigate = (item) => {
