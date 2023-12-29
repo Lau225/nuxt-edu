@@ -13,11 +13,13 @@
       :is-empty="rows.length === 0"
     >
       <template #loading>
-        <LoadingCourseSkeleton></LoadingCourseSkeleton>
+        <LoadingBookSkeleton v-if="type === 'book'"/>
+        <LoadingCourseSkeleton v-else></LoadingCourseSkeleton>
       </template>
-      <n-grid :x-gap="20" :cols="4">
+      <n-grid :x-gap="20" :cols="type === 'book' ? 2 : 4">
         <n-gi v-for="(item, index) in rows" :key="index">
-          <course-list :item="item"></course-list>
+          <BookList  v-if="type === 'book'" :item="item"/>
+          <course-list v-else :item="item"></course-list>
         </n-gi>
       </n-grid>
       <div class="flex justify-center items-center mt-5 mb-10">
