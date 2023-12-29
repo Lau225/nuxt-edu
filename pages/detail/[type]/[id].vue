@@ -9,6 +9,7 @@
             <fava-btn :is_fava="data.isfava" :goods_id="data.id" :type="type"/>
           </div>
           <p class="my-2 text-xs text-gray-400">{{subTitle}}</p>
+          <coupon-modal/>
           <div v-if="!data.isbuy">
             <Price class="text-xl" :value="data.price" />
             <Price class="text-xs ml-1" through :value="data.t_price" />
@@ -24,13 +25,17 @@
         <n-grid-item :span="18">
             <section class="detail-bottom">
                 <UiTab class="border-b">
-                    <UiTabItem active>
-                        详情
+                    <UiTabItem @click="changeTab(item.value)" :active="tab === item.value" v-for="item,index in tabs" :key="index">
+                        {{ item.label }}
                     </UiTabItem>
                 </UiTab>
-                <div class="content" v-html="data.type == 'media' && data.isbuy ? data.content :data.try">
+                <div v-if="tab === 'content'" class="content" v-html="data.type == 'media' && data.isbuy ? data.content :data.try">
 
                 </div>
+                <DetailMenu v-else>
+                  <DetailMenuItem @click="learn(item)" :item="item" :index="index" v-for="item,index in data.column_courses" :key="index"/>
+                  <Empty :desc="暂无目录" v-if="data.column_courses.length == 0"/>
+                </DetailMenu>
             </section>
         </n-grid-item>
         <n-grid-item :span="6">
@@ -42,12 +47,24 @@
 </template>
 
 <script setup>
-import { NImage, NButton,NGrid,NGridItem } from "naive-ui";
+import { NImage, NButton,NGrid,NGridItem,createDiscreteApi } from "naive-ui";
 const route = useRoute();
+
+// 获取query
+const useRequestQuery = () => {
+  const {column_id} = route.query
+  let query = {id}
+  if(column_id){
+    query.column_id = column_id
+  }
+  return query
+}
 
 const { id,type } = route.params;
 
-const { data, error, pending, refresh } = await useReadCourseApi({ id });
+const query = useRequestQuery()
+
+const { data, error, pending, refresh } = await useReadDetailApi(type,query);
 
 const title = computed(() => (!pending.value ? data.value?.title : "详情页"));
 
@@ -86,6 +103,51 @@ const buy = () => {
             return 
         }
     })
+}
+
+// 初始化tab
+const useInitDetailTabs = (t) => {
+  const tabs = computed(()=>{
+    let ts = [{
+      label:"详情",
+      value:"content"
+    }]
+
+    if(t === 'column' || t === 'book'){
+      ts.push({
+        label:"目录",
+        value:"menu"
+      })
+    }
+    return ts
+  })
+
+  const tab = ref('content')
+
+  const changeTab = (e) => tab.value = e
+
+  return {
+    tabs,
+    tab,
+    changeTab
+  }
+}
+
+const {tabs,tab,changeTab} = useInitDetailTabs(type)
+
+
+const learn = (item) => {
+  const {message} = createDiscreteApi(["message"])
+  useHeadAuth(()=>{
+    if(type === 'column' && item.price !==0 && !data.value.isbuy){
+      return message.error("请先购买该专栏")
+    }
+    let url = ""
+    if(type === 'column'){
+      url = `/detail/course/${item.id}?column_id=${data.value.id}`
+    }
+    navigateTo(url)
+  })
 }
 </script>
 

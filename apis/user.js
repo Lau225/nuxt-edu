@@ -129,3 +129,10 @@ export function useUpdatePasswordApi(body){
         body
     })
 }
+
+// 领取优惠券
+export function useReceiveUserCouponApi(body){
+    return useHttpPost("receiveUserCoupon",'/user_coupon/receive',{
+        body
+    })
+}

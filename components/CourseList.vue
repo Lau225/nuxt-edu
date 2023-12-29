@@ -30,7 +30,13 @@ const props = defineProps({
   item: Object,
 });
 const open = () => {
-  navigateTo(`/detail/course/${props.item.id}`)
+  let path = ""
+  if(["course","media","audio","video"].includes(props.item.type)){
+    path = "course"
+  }else{
+    path = props.item.type
+  }
+  navigateTo(`/detail/${path}/${props.item.id}`)
 }
 </script>
 

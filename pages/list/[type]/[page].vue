@@ -44,7 +44,9 @@ definePageMeta({
 
 const { page, limit, total, handlePageChange, rows, pending, error, refresh } =
   await usePage(({ page, limit }) => {
-    return useCourseListApi(page);
+    return useListApi(type,{
+      page
+    });
   });
 
 watch(
