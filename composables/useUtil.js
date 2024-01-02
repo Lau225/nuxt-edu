@@ -10,3 +10,19 @@ export function useQueryToString(query = {}){
     }
     return q
 }
+
+// 时间状态判断
+export function useTimeStatus(start,end){
+    let status = ""
+    start = (new Date(start)).getTime()
+    end = (new Date(end)).getTime()
+    const now = Date.now()
+    if(start < now && now < end){
+        status = 'ing'
+    }else if(start>=now){
+        status = "pending"
+    }else{
+        status = "end"
+    }
+    return status
+}

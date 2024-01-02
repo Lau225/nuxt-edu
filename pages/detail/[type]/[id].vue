@@ -1,13 +1,14 @@
 <template>
   <LoadingGroup :pending="pending" :error="error">
 
-    <section class="py-4" v-if="data.isbuy && (data.type !== 'media' && type === 'course')">
+    <section class="py-4" v-if="data.isbuy && ((data.type !== 'media' && type === 'course') || type === 'live')">
       <ClientOnly>
         <template #fallback>
           <LoadingSkeleton/>
         </template>
         <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :url="data.content" :cover="data.cover"></PlayerAudio>
         <PlayerVideo :url="data.content" v-else-if="data.type === 'video'"/>
+        <PlayerLive :url="data.playUrl" v-else-if="type === 'live'"/>
       </ClientOnly>
     </section>
 
@@ -25,11 +26,12 @@
             <fava-btn :is_fava="data.isfava" :goods_id="data.id" :type="type" />
           </div>
           <p class="my-2 text-xs text-gray-400">{{ subTitle }}</p>
-          <coupon-modal />
           <div v-if="!data.isbuy">
             <Price class="text-xl" :value="data.price" />
             <Price class="text-xs ml-1" through :value="data.t_price" />
           </div>
+          <coupon-modal v-if="type !== 'live'"/>
+          <LiveStatusBar v-else :start="data.start_time" :end="data.end_time"/>
         </div>
         <div class="mt-auto" v-if="!data.isbuy">
           <template v-if="type === 'book'">
@@ -234,7 +236,6 @@ const learn = (item) => {
 
 // 初始化head
 const useInitHead = () => {
-  if(type === 'course'){
     useHead({
       link:[{
         rel:"stylesheet",
@@ -244,9 +245,12 @@ const useInitHead = () => {
         src:"/aplayer/Aplayer.min.js"
       },{
         src:'//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js'
-      }]
+      },
+      {
+        src:"//unpkg.byted-static.com/xgplayer-flv/2.5.1/dist/index.min.js"
+      }
+    ]
     })
-  }
 }
 
 useInitHead()
