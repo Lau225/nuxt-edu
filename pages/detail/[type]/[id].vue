@@ -1,6 +1,16 @@
 <template>
   <LoadingGroup :pending="pending" :error="error">
-    <section class="detail-top">
+
+    <section class="py-4" v-if="data.isbuy && (data.type !== 'media' && type === 'course')">
+      <ClientOnly>
+        <template #fallback>
+          <LoadingSkeleton/>
+        </template>
+        <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :url="data.content" :cover="data.cover"></PlayerAudio>
+      </ClientOnly>
+    </section>
+
+    <section v-else class="detail-top">
       <n-image
         :src="data.cover"
         class="image"
@@ -220,6 +230,24 @@ const learn = (item) => {
     navigateTo(url);
   });
 };
+
+// 初始化head
+const useInitHead = () => {
+  if(type === 'course'){
+    useHead({
+      link:[{
+        rel:"stylesheet",
+        href:"/aplayer/Aplayer.min.css"
+      }],
+      script:[{
+        src:"/aplayer/Aplayer.min.js"
+      }]
+    })
+  }
+}
+
+useInitHead()
+
 </script>
 
 <style scoped>

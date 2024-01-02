@@ -48,6 +48,7 @@ const stop = watchEffect(()=>{
         },200)
     }
 })
+console.log(props.error);
 onBeforeUnmount(()=>stop())
 </script>
 
