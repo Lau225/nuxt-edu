@@ -7,6 +7,7 @@
           <LoadingSkeleton/>
         </template>
         <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :url="data.content" :cover="data.cover"></PlayerAudio>
+        <PlayerVideo :url="data.content" v-else-if="data.type === 'video'"/>
       </ClientOnly>
     </section>
 
@@ -241,6 +242,8 @@ const useInitHead = () => {
       }],
       script:[{
         src:"/aplayer/Aplayer.min.js"
+      },{
+        src:'//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js'
       }]
     })
   }
