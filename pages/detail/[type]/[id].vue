@@ -178,6 +178,22 @@ const buy = () => {
 
       return;
     }
+
+    // 付费学习
+    let ty = "course"
+    let id = data.value.id
+    switch(type){
+      case 'book':
+        ty = 'book'
+        break
+      case 'live':
+        ty = 'live'
+        break
+      case 'column':
+        ty = 'column'
+        break
+    }
+    navigateTo(`/createorder?id=${id}&type=${ty}`)
   });
 };
 
@@ -227,6 +243,7 @@ const learn = (item) => {
       case "book":
         url = `/book/${data.value.id}/${item.id}`;
         break
+      
       default:
         url = ""
     }
