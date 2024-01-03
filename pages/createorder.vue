@@ -3,13 +3,15 @@
     <n-card class="createorder">
       <h4>产品信息</h4>
       <div class="flex mb-5">
-        <n-image class="rounded flex-shrink-0 w-[180px] h-[100px]" :src="data.cover" />
+        <n-image class="rounded flex-shrink-0 w-[180px] h-[100px]"
+         :src="data.cover" 
+         :class="type === 'book' ? 'w-[100px]':'w-[180px]'"/>
         <div class="flex flex-1 ml-4 flex-col">
           <h5 class="flex text-xl text-gray-500">
             {{ data.title }}
             <Price :value="data.price" class="ml-auto" />
           </h5>
-          <div class="mt-auto">
+          <div class="mt-auto" v-if="type === 'course'">
             <n-tag :bordered="false" size="small"> {{ t[data.type] }} </n-tag>
           </div>
         </div>
@@ -40,7 +42,7 @@
       </div>
 
       <div class="flex justify-end">
-        <n-button type="primary">确认支付</n-button>
+        <n-button :loading="loading" @click="submit" type="primary">确认支付</n-button>
       </div>
     </n-card>
   </LoadingGroup>
@@ -97,7 +99,29 @@ const price = computed(()=>{
     return p <= 0 ? 0 : p
 })
 
-// 优惠券价格
+const loading = ref(false)
+
+const submit = async () => {
+
+  let d = {}
+
+  if(type === 'course' || type === 'column' || type === 'book'){
+    d = {
+      goods_id:data.value.id,
+      type
+    }
+    if(user_coupon_id.value){
+      d.user_coupon_id = user_coupon_id.value
+    }
+  }
+
+  loading.value = true
+  const {data:createOrderResult,error:createOrderError} = await useCreateOrderApi(d)
+  loading.value = false
+  if(createOrderError.value) return 
+  navigateTo(`/pay?no=${createOrderResult.value.no}`,{replace:true})
+}
+
 </script>
 
 <style scoped>
