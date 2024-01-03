@@ -20,6 +20,7 @@
   "dependencies": {
     "@css-render/vue3-ssr": "^0.15.12",
     "aplayer": "^1.10.1",
-    "naive-ui": "^2.36.0"
+    "naive-ui": "^2.36.0",
+    "qrcode": "^1.5.3"
   }
 }

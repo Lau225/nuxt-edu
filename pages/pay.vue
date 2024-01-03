@@ -7,13 +7,14 @@
         </n-alert> 
         <h4 class="text-xl mb-2">微信支付</h4>
         <p class="text-sm text-gray-500 flex">
-          距离二维码过期还剩<time-box class="text-rose-500" :expire="0.1" @end="hanleTimeOut"/>,过期后请刷新页面重新获取
+          距离二维码过期还剩<time-box class="text-rose-500" :expire="5" @end="hanleTimeOut"/>,过期后请刷新页面重新获取
         </p>
         <h5 class="flex justify-center py-5">
           支付总额：
           <Price :value="data.price"/>
         </h5>
         <!-- 二维码组件 -->
+        <QrCode :data="data.code" v-if="data.code"/>
         <div class="flex justify-center items-center py-4 text-green-500">
           <n-icon :size="35">
             <ScanCircleOutline/>
