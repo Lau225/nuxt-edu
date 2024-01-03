@@ -17,3 +17,23 @@ export function useCreateOrderApi(body){
         body
     })
 }
+
+
+// 微信pc支付
+export function useWxPayApi(no){
+    return useHttpPost("WxPay",`/order/wxpay`,{
+        body:{
+            no
+        }
+    })
+}
+
+// 查询订单是否支付成功
+export function useIsWxPayApi(no){
+    return useHttpPost("isWxPay",`/order/iswxpay`,{
+        body:{
+            no
+        },
+        $:true
+    })
+}
