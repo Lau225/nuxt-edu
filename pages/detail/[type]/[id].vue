@@ -73,7 +73,7 @@
             <n-button v-else type="primary" disabled> 敬请期待 </n-button>
           </template>
           <n-button v-else @click="buy" :loading="loading" type="primary"
-            >立即学习</n-button
+            >{{ btn }}</n-button
           >
         </div>
       </div>
@@ -196,6 +196,19 @@ const buy = () => {
       return;
     }
 
+    // 发起拼团
+    if(data.value.group){
+      loading.value = true
+      const {error,data:res} =  await useCreateOrderApi({
+        group_id:data.value.group.id,     
+      },"group")
+      loading.value = false
+      if(!error.value){
+        navigateTo(`/pay?no=${res.value.no}`)
+      }
+      return 
+    }
+
     // 付费学习
     let ty = "course";
     let id = data.value.id;
@@ -214,6 +227,7 @@ const buy = () => {
       ty = "flashsale"
       id = data.value.flashsale.id
     }
+
     navigateTo(`/createorder?id=${id}&type=${ty}`);
   });
 };
@@ -249,7 +263,15 @@ const useInitDetailTabs = (t) => {
 };
 
 const { tabs, tab, changeTab } = useInitDetailTabs(type);
-
+const btn = computed(()=>{
+  if(data.value.group){
+    return "立即拼团"
+  }else if(data.value.flashsale){
+    return "立即秒杀"
+  }else{
+    return "立即学习"
+  }
+})
 const learn = (item) => {
   const { message } = createDiscreteApi(["message"]);
   useHeadAuth(() => {

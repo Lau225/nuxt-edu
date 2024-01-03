@@ -16,6 +16,8 @@ export function useCreateOrderApi(body,type = ''){
     let url = `/order/save`
     if(type === 'flashsale'){
         url = `/order/flashsale`
+    }else if(type === 'group'){
+        url = `/order/group`
     }
     return useHttpPost("CreateOrder",url,{
         body
