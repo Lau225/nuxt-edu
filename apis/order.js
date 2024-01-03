@@ -12,8 +12,12 @@ export function useGetUseableUserCouponApi(id,type){
 
 
 // 创建订单
-export function useCreateOrderApi(body){
-    return useHttpPost("CreateOrder",`/order/save`,{
+export function useCreateOrderApi(body,type = ''){
+    let url = `/order/save`
+    if(type === 'flashsale'){
+        url = `/order/flashsale`
+    }
+    return useHttpPost("CreateOrder",url,{
         body
     })
 }
