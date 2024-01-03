@@ -36,7 +36,13 @@ const open = () => {
   }else{
     path = props.item.type
   }
-  navigateTo(`/detail/${path}/${props.item.id}`)
+  if(props.item.group_id){
+    navigateTo(`/detail/${path}/${props.item.id}?group_id=${props.item.group_id}`)
+  }else if(props.item.flashsale_id){
+    navigateTo(`/detail/${path}/${props.item.id}?flashsale_id=${props.item.flashsale_id}`)
+  }else{
+    navigateTo(`/detail/${path}/${props.item.id}`)
+  }
 }
 </script>
 

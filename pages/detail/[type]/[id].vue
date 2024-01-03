@@ -1,14 +1,24 @@
 <template>
   <LoadingGroup :pending="pending" :error="error">
-
-    <section class="py-4" v-if="data.isbuy && ((data.type !== 'media' && type === 'course') || type === 'live')">
+    <section
+      class="py-4"
+      v-if="
+        data.isbuy &&
+        ((data.type !== 'media' && type === 'course') || type === 'live')
+      "
+    >
       <ClientOnly>
         <template #fallback>
-          <LoadingSkeleton/>
+          <LoadingSkeleton />
         </template>
-        <PlayerAudio v-if="data.type === 'audio'" :title="data.title" :url="data.content" :cover="data.cover"></PlayerAudio>
-        <PlayerVideo :url="data.content" v-else-if="data.type === 'video'"/>
-        <PlayerLive :url="data.playUrl" v-else-if="type === 'live'"/>
+        <PlayerAudio
+          v-if="data.type === 'audio'"
+          :title="data.title"
+          :url="data.content"
+          :cover="data.cover"
+        ></PlayerAudio>
+        <PlayerVideo :url="data.content" v-else-if="data.type === 'video'" />
+        <PlayerLive :url="data.playUrl" v-else-if="type === 'live'" />
       </ClientOnly>
     </section>
 
@@ -26,16 +36,25 @@
             <fava-btn :is_fava="data.isfava" :goods_id="data.id" :type="type" />
           </div>
           <p class="my-2 text-xs text-gray-400">{{ subTitle }}</p>
-          <div v-if="!data.isbuy">
-            <Price class="text-xl" :value="data.price" />
-            <Price class="text-xs ml-1" through :value="data.t_price" />
-          </div>
-          <coupon-modal v-if="type !== 'live'"/>
-          <LiveStatusBar v-else :start="data.start_time" :end="data.end_time"/>
+          <template v-if="!data.isbuy">
+            <ActiveBar :data="data" v-if="data.group || data.flashsale"/>
+            <template v-else>
+              <div>
+                <Price class="text-xl" :value="data.price" />
+                <Price class="text-xs ml-1" through :value="data.t_price" />
+              </div>
+              <coupon-modal v-if="type !== 'live'" />
+              <LiveStatusBar
+                v-else
+                :start="data.start_time"
+                :end="data.end_time"
+              />
+            </template>
+          </template>
         </div>
         <div class="mt-auto" v-if="!data.isbuy">
           <template v-if="type === 'book'">
-              <template v-if="menus.length > 0">
+            <template v-if="menus.length > 0">
               <n-button @click="buy" :loading="loading" type="primary"
                 >立即学习</n-button
               >
@@ -46,21 +65,15 @@
                 v-if="freeId"
                 type="primary"
                 size="medium"
-                @click="learn({id:freeId})"
+                @click="learn({ id: freeId })"
               >
                 免费试看
               </n-button>
             </template>
-            <n-button
-                v-else
-                type="primary"
-                disabled
-              >
-                敬请期待
-              </n-button>
+            <n-button v-else type="primary" disabled> 敬请期待 </n-button>
           </template>
           <n-button v-else @click="buy" :loading="loading" type="primary"
-          >立即学习</n-button
+            >立即学习</n-button
           >
         </div>
       </div>
@@ -111,10 +124,14 @@ const route = useRoute();
 
 // 获取query
 const useRequestQuery = () => {
-  const { column_id } = route.query;
+  const { column_id, flashsale_id, group_id } = route.query;
   let query = { id };
   if (column_id) {
     query.column_id = column_id;
+  } else if (flashsale_id) {
+    query.flashsale_id = flashsale_id;
+  } else if (group_id) {
+    query.group_id = group_id;
   }
   return query;
 };
@@ -123,16 +140,16 @@ const { id, type } = route.params;
 
 const query = useRequestQuery();
 
-const freeId = computed(()=>{
-  let fid = 0
-  if(type === 'book' && data.value){
-    let item =  data.value.book_details.find(o=>o.isfree == 1)
-    if(item){
-      fid = item.id
+const freeId = computed(() => {
+  let fid = 0;
+  if (type === "book" && data.value) {
+    let item = data.value.book_details.find((o) => o.isfree == 1);
+    if (item) {
+      fid = item.id;
     }
   }
-  return fid
-})
+  return fid;
+});
 
 const { data, error, pending, refresh } = await useReadDetailApi(type, query);
 
@@ -180,20 +197,20 @@ const buy = () => {
     }
 
     // 付费学习
-    let ty = "course"
-    let id = data.value.id
-    switch(type){
-      case 'book':
-        ty = 'book'
-        break
-      case 'live':
-        ty = 'live'
-        break
-      case 'column':
-        ty = 'column'
-        break
+    let ty = "course";
+    let id = data.value.id;
+    switch (type) {
+      case "book":
+        ty = "book";
+        break;
+      case "live":
+        ty = "live";
+        break;
+      case "column":
+        ty = "column";
+        break;
     }
-    navigateTo(`/createorder?id=${id}&type=${ty}`)
+    navigateTo(`/createorder?id=${id}&type=${ty}`);
   });
 };
 
@@ -236,16 +253,16 @@ const learn = (item) => {
       return message.error("请先购买该专栏");
     }
     let url = "";
-    switch(type){
+    switch (type) {
       case "columb":
         url = `/detail/course/${item.id}?column_id=${data.value.id}`;
-        break
+        break;
       case "book":
         url = `/book/${data.value.id}/${item.id}`;
-        break
-      
+        break;
+
       default:
-        url = ""
+        url = "";
     }
     navigateTo(url);
   });
@@ -253,25 +270,28 @@ const learn = (item) => {
 
 // 初始化head
 const useInitHead = () => {
-    useHead({
-      link:[{
-        rel:"stylesheet",
-        href:"/aplayer/Aplayer.min.css"
-      }],
-      script:[{
-        src:"/aplayer/Aplayer.min.js"
-      },{
-        src:'//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js'
+  useHead({
+    link: [
+      {
+        rel: "stylesheet",
+        href: "/aplayer/Aplayer.min.css",
+      },
+    ],
+    script: [
+      {
+        src: "/aplayer/Aplayer.min.js",
       },
       {
-        src:"//unpkg.byted-static.com/xgplayer-flv/2.5.1/dist/index.min.js"
-      }
-    ]
-    })
-}
+        src: "//unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js",
+      },
+      {
+        src: "//unpkg.byted-static.com/xgplayer-flv/2.5.1/dist/index.min.js",
+      },
+    ],
+  });
+};
 
-useInitHead()
-
+useInitHead();
 </script>
 
 <style scoped>
