@@ -46,9 +46,16 @@ definePageMeta({
 
 const { page, limit, total, handlePageChange, rows, pending, error, refresh } =
   await usePage(({ page, limit }) => {
-    return useListApi(type,{
+
+    let query = {
       page
-    });
+    }
+
+    if(type === 'group' || type === 'flashsale'){
+      query.usable = 1
+    }
+    
+    return useListApi(type,query);
   });
 
 watch(
