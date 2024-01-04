@@ -7,13 +7,13 @@
                     <h3 class="text-center font-bold">{{ data.title }}</h3>
                     <n-divider/>
                     <p class="space-x-5">
-                        <span>题目总数：{{ data.testpaper_questions.length }}</span>
+                        <span>题目总数：{{ testpaper_questions.length }}</span>
                         <span>总分数：{{ data.total_score }}</span>
                         <span>时间：{{ data.expire }}分钟</span>
                     </p>
                 </template>
                 <!-- 题目组件 -->
-                <paper-test-item @change="handleUserValueChange(item,$event)" v-for="item,index in data.testpaper_questions" :key="index" :item="item" :index="index"/>
+                <paper-test-item :id="'question_' + index" @change="handleUserValueChange(item,$event)" v-for="item,index in testpaper_questions" :key="index" :item="item" :index="index"/>
             </n-card>
         </n-grid-item>
         <n-grid-item :span="6">
@@ -25,16 +25,16 @@
                     </div>
                 </template>
                 <n-grid :x-gap="12" :cols="4">
-                    <n-grid-item v-for="item,index in data.testpaper_questions" :key="index">
-                        <n-tag class="mb-2 w-full cursor-pointer flex items-center justify-center" type="default">
+                    <n-grid-item v-for="item,index in testpaper_questions" :key="index">
+                        <n-tag @click="scrollToDom(index)" class="mb-2 w-full cursor-pointer flex items-center justify-center" 
+						:type="item.isTest ? 'success' : 'default'">
                             {{ index + 1 }}
                         </n-tag>
                     </n-grid-item>
                 </n-grid>
                 <n-divider/>
                 <div>
-                    <n-button type="primary" class="w-full" @click="">交卷</n-button>
-                    
+                    <n-button type="primary" class="w-full">交卷</n-button> 
                 </div>
             </n-card>
         </n-grid-item>
@@ -121,9 +121,40 @@ const data = ref({
 		],
 		"user_test_id": 7
 })
+const testpaper_questions = computed(()=>{
+	return data.value ? data.value.testpaper_questions.map(o=>{
+		o.isTest = false
+		return o
+	}) : []
+})
 useHead({title:"考试页面"})
+
+// 检查题目是否填写
+const updateIsTest = () => {
+	testpaper_questions.value.forEach(item=>{
+		let t = false
+		// 问答题和填空题
+		if(item.type === 'answer' || item.type === 'completion'){
+			t = !!item.user_value[0]
+		}else if(item.type === 'radio' || item.type === 'trueOrfalse'){
+			t = item.user_value !== -1
+		}else{
+			t = item.user_value.length > 0
+		}
+		item.isTest = t
+	})
+}
+
+// 监听题目值的变化
 const handleUserValueChange = (item,val) => {
 	item.user_value = val
+	updateIsTest()
+}
+
+// 自动跳转指定题目
+const scrollToDom = (index) => {
+	const dom = document.getElementById("question_" + index)
+	window.scroll(0,dom.offsetTop)
 }
 </script>
 
